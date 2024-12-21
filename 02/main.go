@@ -1,16 +1,15 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
 	"strings"
+
+	"github.com/summersb/support"
 )
 
 func main() {
 
-	reports, err := readFile("input.txt")
+	reports, err := support.ReadFile("input.txt")
 	if err != nil {
 		return
 	}
@@ -26,28 +25,13 @@ func main() {
 	fmt.Println("Safe reports ", safe)
 }
 
-func num(data string) int {
-	i, err := strconv.Atoi(data)
-	if err != nil {
-		panic(err)
-	}
-	return i
-}
-
-func abs(a int) int {
-	if a < 0 {
-		a = -a
-	}
-	return a
-}
-
 func isSafe(data []string) bool {
 	dir := 0
-	if num(data[0]) > num(data[1]) {
+	if support.Num(data[0]) > support.Num(data[1]) {
 		dir = 1
 	}
 
-	if num(data[0]) < num(data[1]) {
+	if support.Num(data[0]) < support.Num(data[1]) {
 		dir = -1
 	}
 	if dir == 0 {
@@ -55,9 +39,9 @@ func isSafe(data []string) bool {
 	}
 	for i := 1; i < len(data); i++ {
 
-		change := num(data[i-1]) - num(data[i])
+		change := support.Num(data[i-1]) - support.Num(data[i])
 
-		if abs(change) > 3 {
+		if support.Abs(change) > 3 {
 			return false
 		}
 		if change == 0 {
@@ -78,21 +62,4 @@ func isSafe(data []string) bool {
 	}
 	return true
 
-}
-func readFile(fileName string) ([]string, error) {
-	file, err := os.Open(fileName)
-	if err != nil {
-		return nil, err
-	}
-
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-
-	data := []string{}
-	for scanner.Scan() {
-		line := scanner.Text()
-		data = append(data, line)
-	}
-
-	return data, nil
 }

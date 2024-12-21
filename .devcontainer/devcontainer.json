@@ -1,0 +1,14 @@
+{
+    "customizations": {
+      "codespaces": {
+        "repositories": {
+          "summersb/aoc-2024": {
+            "permissions": {
+              "issues": "write"
+            }
+          }
+        }
+      }
+    }
+  }
+  
