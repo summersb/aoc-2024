@@ -1,13 +1,16 @@
 package support
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
-func Num(data string) int {
+func Num(data string) (int, error) {
 	i, err := strconv.Atoi(data)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
-	return i
+	return i, nil
 }
 
 func Abs(a int) int {
@@ -15,4 +18,13 @@ func Abs(a int) int {
 		a = -a
 	}
 	return a
+}
+
+func IndexOf(data string, find string, pos int) int {
+	idx := strings.Index(data[pos:], find)
+	if idx > -1 {
+		idx += pos
+	}
+
+	return idx
 }
